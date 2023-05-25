@@ -2,14 +2,14 @@
 
 ## Instalation
     
-    First of all you need to build application image:
+###    First of all you need to build application image:
    
     ```
     docker build ./applifting-app applifting-app 
     ```
 ## Run
 
-    There is `docker-compose.yml` file in root directory. You can run this command: 
+###    There is `docker-compose.yml` file in root directory. You can run this command: 
     
     ```
     docker-compose up
