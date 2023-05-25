@@ -1,0 +1,64 @@
+version: '3'
+services:
+  postgres-applifting:
+    image: postgres
+    container_name: postgres-applifting
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: pass
+      POSTGRES_USER: postgres
+      POSTGRES_DB: applifting
+    ports:
+      - 5432:5432
+    networks:
+      - applifting  
+
+  adminer-applifting:
+    image: adminer:latest
+    container_name: adminer-applifting
+    environment:
+        ADMINER_DEFAULT_SERVER: postgres
+    ports:
+      - 8082:8080
+    depends_on:
+      - postgres-applifting
+    networks:
+      - applifting
+
+  app-migration:
+    image: applifting-app
+    container_name: applifting-app-migration
+    environment:
+      DB_HOST: postgres-applifting
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASS: pass
+      DB_NAME: applifting
+    command:
+      - npm
+      - run
+      - migrate 
+    depends_on:
+      - postgres-applifting
+    networks:
+      - applifting      
+  
+  app-applifting:
+    image: applifting-app
+    container_name: applifting-app
+    environment:
+      DB_HOST: postgres-applifting
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASS: pass
+      DB_NAME: applifting
+    ports:
+      - 3000:3000
+    depends_on:
+      - postgres-applifting
+      - app-migration
+    networks:
+      - applifting  
+networks:
+  applifting:
+    driver: bridge
