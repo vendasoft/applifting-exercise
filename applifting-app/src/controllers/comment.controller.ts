@@ -7,7 +7,7 @@ import {CommentService} from '../services';
 export class CommentController {
   constructor(
     @inject('services.CommentService') private commentService: CommentService,
-  ) { }
+  ) {}
 
   @authenticate('jwt')
   @post('comments')

@@ -1,12 +1,16 @@
 import {AuthenticationComponent} from '@loopback/authentication';
-import {JWTAuthenticationComponent, TokenServiceBindings, UserServiceBindings} from '@loopback/authentication-jwt';
+import {
+  JWTAuthenticationComponent,
+  TokenServiceBindings,
+  UserServiceBindings,
+} from '@loopback/authentication-jwt';
 import {BootMixin} from '@loopback/boot';
 import {ApplicationConfig} from '@loopback/core';
 import {RepositoryMixin} from '@loopback/repository';
-import {RestApplication} from '@loopback/rest';
+import {OASEnhancerBindings, RestApplication} from '@loopback/rest';
 import {
   RestExplorerBindings,
-  RestExplorerComponent
+  RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
 import crypto from 'crypto';
@@ -23,7 +27,6 @@ export class AppliftingApplication extends BootMixin(
 ) {
   constructor(options: ApplicationConfig = {}) {
     super(options);
-
     // Set up the custom sequence
     this.sequence(MySequence);
 
@@ -51,6 +54,10 @@ export class AppliftingApplication extends BootMixin(
         nested: true,
       },
     };
+  }
+
+  getSpecService() {
+    return this.get(OASEnhancerBindings.OAS_ENHANCER_SERVICE);
   }
 
   setupBindings() {

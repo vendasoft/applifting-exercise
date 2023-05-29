@@ -49,7 +49,7 @@ export class UserController {
     return {
       accessToken: token,
       exiresIn: Number(this.jwtExpiresIn),
-      tokenType: TokenTypes.Bearer
+      tokenType: TokenTypes.Bearer,
     };
   }
 

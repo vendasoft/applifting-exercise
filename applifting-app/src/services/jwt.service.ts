@@ -20,7 +20,7 @@ export class JWTService implements TokenService {
     private jwtSecret: string,
     @inject(TokenServiceBindings.TOKEN_EXPIRES_IN)
     private jwtExpiresIn: string,
-  ) { }
+  ) {}
 
   async verifyToken(token: string): Promise<UserProfile> {
     if (!token) {
